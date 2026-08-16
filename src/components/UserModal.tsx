@@ -7,7 +7,7 @@ import { Select } from './ui/Select';
 import { useToast } from './ui/Toast';
 import { useDataStore } from '@/store/dataStore';
 import { useAuthStore } from '@/store/authStore';
-import { buildWelcomeEmail, sendMockEmail } from '@/services/emailService';
+import { buildWelcomeEmail, sendMockEmail,  sendEmail } from '@/services/emailService';
 import { openEmailPreview } from './EmailPreviewModal';
 
 interface UserModalProps {
@@ -69,7 +69,7 @@ export function UserModal({ open, onClose, user: editUser }: UserModalProps) {
     }
   }, [open, editUser]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
     if (!name.trim()) errs.name = 'Name is required';
@@ -99,6 +99,17 @@ export function UserModal({ open, onClose, user: editUser }: UserModalProps) {
         password,
       });
       sendMockEmail(welcomeEmail);
+
+      try {
+  await sendEmail(welcomeEmail, {
+    userEmail: email.trim(),
+    userPassword: password,
+  });
+
+  console.log('Welcome email sent successfully!');
+} catch (error) {
+  console.error('Failed to send welcome email:', error);
+}
 
       const newUserId = addUser({
         name: name.trim(),
