@@ -7,6 +7,8 @@ import { Select } from './ui/Select';
 import { useToast } from './ui/Toast';
 import { useDataStore } from '@/store/dataStore';
 import { useAuthStore } from '@/store/authStore';
+import { buildWelcomeEmail, sendMockEmail } from '@/services/emailService';
+import { openEmailPreview } from './EmailPreviewModal';
 
 interface UserModalProps {
   open: boolean;
@@ -31,7 +33,7 @@ const departmentOptions = [
 const avatarColors = ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6', '#ef4444', '#6366f1'];
 
 export function UserModal({ open, onClose, user: editUser }: UserModalProps) {
-  const { addUser, updateUser } = useDataStore();
+  const { addUser, updateUser, addNotification, addActivity } = useDataStore();
   const currentUser = useAuthStore((s) => s.user);
   const toast = useToast();
 
@@ -91,7 +93,14 @@ export function UserModal({ open, onClose, user: editUser }: UserModalProps) {
       });
       toast.success('User updated successfully');
     } else {
-      addUser({
+      const welcomeEmail = buildWelcomeEmail({
+        name: name.trim(),
+        email: email.trim(),
+        password,
+      });
+      sendMockEmail(welcomeEmail);
+
+      const newUserId = addUser({
         name: name.trim(),
         email: email.trim(),
         password,
@@ -100,7 +109,23 @@ export function UserModal({ open, onClose, user: editUser }: UserModalProps) {
         avatarColor,
         active,
       });
-      toast.success('User added successfully');
+
+      addNotification({
+        userId: newUserId,
+        type: 'PROJECT_ASSIGNED',
+        title: 'Welcome to FlowBoard',
+        message: `Welcome ${name.trim()}! Your account has been created. Check your email for login credentials.`,
+        link: '/dashboard',
+      });
+
+      addActivity({
+        userId: currentUser!.id,
+        action: 'added user',
+        target: name.trim(),
+      });
+
+      toast.success(`User added. Credentials email queued for ${name.trim()}.`);
+      setTimeout(() => openEmailPreview(), 300);
     }
     onClose();
   };

@@ -9,6 +9,15 @@ export interface EmailContent {
   body: string;
 }
 
+export function buildWelcomeEmail(user: Pick<User, 'name' | 'email' | 'password'>): EmailContent {
+  return {
+    to: user.email,
+    toName: user.name,
+    subject: 'Welcome to FlowBoard — Your Account Credentials',
+    body: `Hello ${user.name},\n\nWelcome to FlowBoard! Your account has been created.\n\nHere are your login credentials:\n\nEmail: ${user.email}\nPassword: ${user.password}\n\nPlease log in to your dashboard to get started. We recommend changing your password after your first login.\n\nRegards,\nFlowBoard Admin`,
+  };
+}
+
 export function buildProjectAssignedEmail(user: User, project: Project): EmailContent {
   return {
     to: user.email,
