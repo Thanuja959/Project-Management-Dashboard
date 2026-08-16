@@ -22,7 +22,7 @@ interface DataState {
   init: () => void;
 
   // Users
-  addUser: (u: Omit<User, 'id' | 'createdAt'>) => void;
+  addUser: (u: Omit<User, 'id' | 'createdAt'>) => string;
   updateUser: (id: string, patch: Partial<User>) => void;
   deleteUser: (id: string) => void;
 
@@ -76,12 +76,14 @@ export const useDataStore = create<DataState>((set, get) => ({
   },
 
   addUser: (u) => {
-    const user: User = { ...u, id: uid('u'), createdAt: new Date().toISOString() };
+    const id = uid('u');
+    const user: User = { ...u, id, createdAt: new Date().toISOString() };
     set((s) => {
       const users = [...s.users, user];
       saveState('users', users);
       return { users };
     });
+    return id;
   },
 
   updateUser: (id, patch) => {

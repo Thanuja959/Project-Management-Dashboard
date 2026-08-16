@@ -11,8 +11,8 @@ const daysFromNow = (n: number) => {
 export const mockUsers: User[] = [
   {
     id: 'u_admin',
-    name: 'Alex Morgan',
-    email: 'admin@example.com',
+    name: 'Thanuja Peddinti',
+    email: 'thanujatanu66@gmail.com',
     password: 'admin123',
     role: 'ADMIN',
     department: 'Management',
@@ -23,7 +23,7 @@ export const mockUsers: User[] = [
   {
     id: 'u_rahul',
     name: 'Rahul Sharma',
-    email: 'user@example.com',
+    email: 'rahul@gmail.com',
     password: 'user123',
     role: 'USER',
     department: 'Engineering',
@@ -34,7 +34,7 @@ export const mockUsers: User[] = [
   {
     id: 'u_priya',
     name: 'Priya Patel',
-    email: 'priya@example.com',
+    email: 'priya@gmail.com',
     password: 'user123',
     role: 'USER',
     department: 'Design',
@@ -45,7 +45,7 @@ export const mockUsers: User[] = [
   {
     id: 'u_arjun',
     name: 'Arjun Verma',
-    email: 'arjun@example.com',
+    email: 'arjun@gmail.com',
     password: 'user123',
     role: 'USER',
     department: 'Engineering',
@@ -56,7 +56,7 @@ export const mockUsers: User[] = [
   {
     id: 'u_sneha',
     name: 'Sneha Reddy',
-    email: 'sneha@example.com',
+    email: 'sneha@gmail.com',
     password: 'user123',
     role: 'USER',
     department: 'QA',
@@ -67,7 +67,7 @@ export const mockUsers: User[] = [
   {
     id: 'u_karan',
     name: 'Karan Singh',
-    email: 'karan@example.com',
+    email: 'karan@gmail.com',
     password: 'user123',
     role: 'USER',
     department: 'Engineering',
