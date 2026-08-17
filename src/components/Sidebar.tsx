@@ -48,7 +48,7 @@ export function Sidebar() {
     <aside className="flex h-full w-60 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
       <div className="flex items-center gap-2.5 px-5 py-5">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900">
-          <CheckSquare className="h-5 w-5" />
+          <img src="/images/logo.png" alt="FlowBoard Logo" className="h-8 w-9" />
         </div>
         <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">FlowBoard</span>
       </div>

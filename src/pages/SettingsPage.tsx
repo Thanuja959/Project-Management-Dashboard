@@ -27,10 +27,11 @@ export function SettingsPage() {
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [department, setDepartment] = useState(user?.department || '');
+  const [password, setPassword] = useState(user?.password || '');
 
   const handleSave = () => {
     if (!user) return;
-    updateUser(user.id, { name, email, department });
+    updateUser(user.id, { name, email, department,password });
     toast.success('Profile updated successfully');
   };
 
@@ -67,7 +68,9 @@ export function SettingsPage() {
           <Input label="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
           <Input label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <Input label="Department" value={department} onChange={(e) => setDepartment(e.target.value)} />
+          <Input label="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
+
         <div className="mt-5 flex justify-end">
           <Button onClick={handleSave}>Save Changes</Button>
         </div>

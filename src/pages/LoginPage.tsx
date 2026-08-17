@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
+import { useDataStore } from '@/store/dataStore';
 import { useToast } from '@/components/ui/Toast';
 import { CheckSquare, Eye, EyeOff, Mail, Lock, Loader2, Shield, User } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -8,6 +9,7 @@ import { motion } from 'framer-motion';
 export function LoginPage() {
   const navigate = useNavigate();
   const { login, loading, error, clearError } = useAuthStore();
+  const { users } = useDataStore();
   const toast = useToast();
 
   const [email, setEmail] = useState('');
@@ -37,8 +39,12 @@ export function LoginPage() {
 
   const fillDemo = (type: 'admin' | 'user') => {
     if (type === 'admin') {
-      setEmail('admin@example.com');
-      setPassword('admin123');
+      setEmail('thanujatanu66@gmail.com');
+       const admin = users.find(
+      (user) => user.email === 'thanujatanu66@gmail.com'
+    );
+
+    setPassword(admin?.password || 'admin123');
     } else {
       setEmail('user@example.com');
       setPassword('user123');
@@ -57,10 +63,14 @@ export function LoginPage() {
         </div>
         <div className="relative">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 backdrop-blur">
-              <CheckSquare className="h-6 w-6" />
-            </div>
-            <span className="text-xl font-bold tracking-tight">FlowBoard</span>
+           <div className="flex h-[60px] w-[60px] items-center justify-center rounded-xl backdrop-blur">
+          <img
+        src="/images/logo.png"
+        alt="FlowBoard Logo"
+        className="h-[60px] w-[60px] object-contain"
+           />
+         </div>
+            <span className="text-3xl font-bold tracking-tight">FlowBoard</span>
           </div>
         </div>
         <div className="relative max-w-md">
@@ -191,10 +201,10 @@ export function LoginPage() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Admin</p>
-                  <p className="text-xs text-slate-400">admin@example.com / admin123</p>
+                  <p className="text-xs text-slate-400">thanujatanu66@gmail.com</p>
                 </div>
               </button>
-              <button
+              {/* <button
                 onClick={() => fillDemo('user')}
                 className="flex w-full items-center gap-3 rounded-lg border border-slate-200 p-2.5 text-left transition-colors hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800"
               >
@@ -205,7 +215,7 @@ export function LoginPage() {
                   <p className="text-sm font-medium text-slate-700 dark:text-slate-300">User</p>
                   <p className="text-xs text-slate-400">user@example.com / user123</p>
                 </div>
-              </button>
+              </button> */}
             </div>
             <p className="mt-3 text-xs text-slate-400">Click a card to auto-fill credentials.</p>
           </div>
