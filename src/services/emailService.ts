@@ -55,21 +55,27 @@ export async function sendEmail(
     userPassword?: string;
   }
 ): Promise<void> {
+  try {
+    const response = await emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        to_email: email.to,
+        to_name: email.toName,
+        subject: email.subject,
+        message: email.body,
+        user_email: credentials?.userEmail ?? email.to,
+        user_password: credentials?.userPassword ?? '',
+      },
+      {
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      }
+    );
 
-  await emailjs.send(
-    import.meta.env.VITE_EMAILJS_SERVICE_ID,
-    import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-    {
-      to_email: email.to,
-      to_name: email.toName,
-      subject: email.subject,
-      message: email.body,
+    console.log('EMAILJS SUCCESS:', response.status, response.text);
 
-      user_email: credentials?.userEmail ?? email.to,
-      user_password: credentials?.userPassword ?? '',
-    },
-    {
-      publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-    }
-  );
+  } catch (error) {
+    console.error('EMAILJS FULL ERROR:', error);
+    throw error;
+  }
 }

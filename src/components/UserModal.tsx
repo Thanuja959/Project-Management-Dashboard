@@ -8,7 +8,7 @@ import { useToast } from './ui/Toast';
 import { useDataStore } from '@/store/dataStore';
 import { useAuthStore } from '@/store/authStore';
 import { buildWelcomeEmail, sendMockEmail,  sendEmail } from '@/services/emailService';
-import { openEmailPreview } from './EmailPreviewModal';
+// import { openEmailPreview } from './EmailPreviewModal';
 
 interface UserModalProps {
   open: boolean;
@@ -136,7 +136,7 @@ export function UserModal({ open, onClose, user: editUser }: UserModalProps) {
       });
 
       toast.success(`User added. Credentials email queued for ${name.trim()}.`);
-      setTimeout(() => openEmailPreview(), 300);
+      // setTimeout(() => openEmailPreview(), 300);
     }
     onClose();
   };
